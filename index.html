@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz de Geografia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="quiz">
+
+    <!-- Tela inicial -->
+    <section id="tela-inicio" class="tela">
+      <h1>Quiz de Geografia</h1>
+      <p class="subtitulo">10 perguntas. Cada acerto vale 100 pontos.</p>
+      <button id="btn-iniciar" class="btn btn-primario">Começar</button>
+    </section>
+
+    <!-- Tela das perguntas -->
+    <section id="tela-pergunta" class="tela" hidden>
+      <div class="topo">
+        <span id="progresso">Pergunta 1 de 10</span>
+        <span id="pontos">0 pontos</span>
+      </div>
+      <div class="barra"><div id="barra-preenchida"></div></div>
+
+      <h2 id="enunciado"></h2>
+      <div id="alternativas" class="alternativas"></div>
+
+      <p id="feedback" class="feedback"></p>
+      <button id="btn-proxima" class="btn btn-primario" hidden>Próxima</button>
+    </section>
+
+    <!-- Tela final -->
+    <section id="tela-final" class="tela" hidden>
+      <h1>Fim do quiz</h1>
+      <p id="resultado" class="resultado"></p>
+      <p id="mensagem-final" class="subtitulo"></p>
+      <button id="btn-reiniciar" class="btn btn-primario">Jogar novamente</button>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
