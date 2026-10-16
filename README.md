@@ -1,65 +1,131 @@
-# Quiz de Geografia
+# Quiz de Matérias
 
-Quiz de geografia que roda direto no navegador, feito com HTML, CSS e JavaScript puro. Tem 10 perguntas de múltipla escolha, e cada acerto vale 100 pontos.
+Quiz de múltipla escolha com 6 matérias: Geografia, Português, Matemática, História, Biologia e Química. O projeto tem duas versões que usam as mesmas perguntas:
 
-## Como rodar
+- **Versão web** (HTML, CSS e JavaScript puro), que funciona em computador, tablet e celular.
+- **Versão no terminal** (Python).
 
-Não precisa instalar nada. Deixe os três arquivos na mesma pasta e abra o `index.html` no navegador (dois cliques no arquivo, ou clique direito e "Abrir com" o navegador).
-
-No VS Code, também dá para usar a extensão **Live Server**: clique direito no `index.html` e escolha "Open with Live Server".
+A cada rodada são sorteadas 10 perguntas da matéria escolhida, com 4 alternativas (A, B, C, D). Cada acerto vale 100 pontos.
 
 ## Estrutura do projeto
 
 ```
-quiz/
-├── index.html    # estrutura da página (tela inicial, perguntas e resultado)
-├── style.css     # aparência: cores, cartão, botões e responsividade
-└── script.js     # lógica: perguntas, pontuação e troca de telas
+quiz-geografia/
+├── index.html          # página do quiz (versão web)
+├── styles/
+│   └── style.css       # visual, cores e responsividade
+├── js/
+│   └── script.js       # lógica do quiz na versão web
+├── materias/           # perguntas de cada matéria (arquivos .csv)
+│   ├── geografia.csv
+│   ├── portugues.csv
+│   ├── matematica.csv
+│   ├── historia.csv
+│   ├── biologia.csv
+│   └── quimica.csv
+├── main.py             # versão terminal: menu e escolha da matéria
+├── carregador.py       # lê os arquivos .csv
+└── jogo.py             # regras do jogo e pontuação
 ```
+
+## Como rodar a versão web
+
+O JavaScript lê os arquivos `.csv` da pasta `materias/`. Por isso **não abra o `index.html` com dois cliques**: o navegador bloqueia a leitura dos arquivos nesse modo. Use um servidor local, de uma destas formas:
+
+**Opção 1: Live Server (VS Code)**
+
+Clique com o botão direito no `index.html` e escolha "Open with Live Server".
+
+**Opção 2: servidor do Python**
+
+Na pasta do projeto, rode:
+
+```bash
+python -m http.server
+```
+
+Depois acesse `http://localhost:8000` no navegador.
+
+### Testando no celular
+
+Com o servidor do Python rodando no computador, abra no celular (conectado na mesma rede Wi-Fi) o endereço `http://IP-DO-SEU-COMPUTADOR:8000`.
+
+## Como rodar a versão no terminal
+
+É preciso ter o Python 3 instalado. Não há nada para instalar além disso. Na pasta do projeto, rode:
+
+```bash
+python main.py
+```
+
+Siga o menu: confirme que quer começar, escolha a matéria e responda digitando a letra da alternativa.
 
 ## Como funciona
 
-1. **Tela inicial:** botão "Começar".
-2. **Perguntas:** uma por vez, com 4 alternativas (A, B, C, D). Ao clicar, a resposta certa fica verde e, se errar, a escolhida fica vermelha, com a resposta correta indicada.
-3. **Tela final:** mostra a pontuação total e uma mensagem conforme o desempenho, com a opção de jogar novamente.
+1. **Escolha da matéria:** o quiz mostra as 6 matérias disponíveis.
+2. **Perguntas:** são sorteadas 10 perguntas, mostradas uma de cada vez. Na versão web, a alternativa certa fica verde e a errada fica vermelha, e as teclas `A` a `D` (ou `1` a `4`) também respondem.
+3. **Resultado:** mostra a pontuação total e uma mensagem conforme o desempenho:
 
-A barra no topo mostra o progresso, e a pontuação é atualizada a cada acerto.
+| Desempenho | Mensagem |
+| --- | --- |
+| 100% | Perfeito, você acertou tudo! |
+| 80% ou mais | Muito bom! |
+| 60% ou mais | Parabéns! |
+| 40% ou mais | Dá para melhorar, tente de novo! |
+| Menos de 40% | Estude mais um pouco e volte! |
+
+Na versão web, o resultado também mostra um gabarito com uma bolinha por pergunta (verde se acertou, vermelha se errou).
 
 ## Como editar as perguntas
 
-As perguntas ficam no começo do `script.js`, numa lista chamada `perguntas`:
+As perguntas ficam nos arquivos `.csv` da pasta `materias/`. Os dois lados (web e Python) leem os mesmos arquivos, então basta editar em um lugar.
 
-```js
-{
-  texto: "Qual é a capital da França?",
-  alternativas: ["Paris", "Londres", "Berlim", "Madrid"],
-  correta: 0
-}
+O arquivo usa **ponto e vírgula** (`;`) como separador, codificação **UTF-8**, e a primeira linha é o cabeçalho:
+
+```
+pergunta;A;B;C;D;correta
+Qual é a capital da França?;Paris;Londres;Berlim;Madrid;A
 ```
 
-- `texto`: o enunciado da pergunta.
-- `alternativas`: as 4 opções, na ordem A, B, C, D.
-- `correta`: o índice da resposta certa, começando em 0 (`0` = A, `1` = B, `2` = C, `3` = D).
+- `pergunta`: o enunciado.
+- `A`, `B`, `C`, `D`: as quatro alternativas.
+- `correta`: a **letra** da resposta certa (`A`, `B`, `C` ou `D`).
 
-Para adicionar uma pergunta, copie um bloco, cole no final da lista (com vírgula entre eles) e troque os textos. O quiz se ajusta sozinho ao número de perguntas e à pontuação máxima.
+Para adicionar uma pergunta, acrescente uma linha no final do arquivo da matéria.
+
+## Como adicionar uma matéria nova
+
+1. Crie o arquivo na pasta `materias/` (por exemplo, `ingles.csv`) seguindo o formato acima.
+2. **Versão web:** no começo do `js/script.js`, acrescente uma linha na lista `MATERIAS`:
+
+   ```js
+   { nome: "Inglês", arquivo: "materias/ingles.csv" },
+   ```
+
+3. **Versão terminal:** em `main.py`, acrescente a matéria no dicionário `materias` e uma linha no menu de escolha.
 
 ## Como mudar o visual
 
-No começo do `style.css` há variáveis de cor dentro de `:root`:
+No começo do `styles/style.css` há variáveis de cor dentro de `:root`. Trocando esses valores, as cores mudam em toda a página:
 
 ```css
 :root {
-  --primaria: #2563eb;
-  --certo: #16a34a;
-  --errado: #dc2626;
+  --primaria: #243b9c;
+  --certo: #1c8a58;
+  --errado: #c7372f;
 }
 ```
 
-Trocando esses valores, as cores mudam em toda a página. O visual também se adapta ao celular e ao modo escuro do sistema.
+A página se adapta ao tamanho da tela (celular, tablet e computador) e ao modo escuro do sistema.
 
 ## Ideias para o futuro
 
-- Perguntas em ordem aleatória
-- Ranking de pontuações
 - Tempo limite por pergunta
-- Várias matérias e vários quizzes, com abas
+- Ranking de pontuações
+- Escolher quantas perguntas por rodada
+- Mostrar a resposta certa de todas as perguntas no final
+
+## Tecnologias
+
+- HTML, CSS e JavaScript (sem bibliotecas)
+- Python 3 (bibliotecas padrão `csv` e `random`)
