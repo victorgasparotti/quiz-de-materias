@@ -2,45 +2,69 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quiz de Geografia</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Quiz de Matérias</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-  <main class="quiz">
 
-    <!-- Tela inicial -->
+  <main class="folha">
+
+    <!-- ========== TELA 1: escolher a matéria ========== -->
     <section id="tela-inicio" class="tela">
-      <h1>Quiz de Geografia</h1>
-      <p class="subtitulo">10 perguntas. Cada acerto vale 100 pontos.</p>
-      <button id="btn-iniciar" class="btn btn-primario">Começar</button>
+      <h1 class="titulo-grande">Quiz de<br>matérias</h1>
+      <p class="subtitulo">10 perguntas sorteadas, 4 alternativas, 100 pontos por acerto. Escolha uma matéria para começar.</p>
+
+      <div id="lista-materias" class="materias"></div>
+
+      <p id="erro-carregar" class="erro" role="alert" hidden></p>
     </section>
 
-    <!-- Tela das perguntas -->
-    <section id="tela-pergunta" class="tela" hidden>
-      <div class="topo">
-        <span id="progresso">Pergunta 1 de 10</span>
-        <span id="pontos">0 pontos</span>
-      </div>
-      <div class="barra"><div id="barra-preenchida"></div></div>
+    <!-- ========== TELA 2: perguntas ========== -->
+    <section id="tela-quiz" class="tela" hidden>
+      <header class="topo-quiz">
+        <button id="btn-sair" class="link-botao" type="button">Trocar matéria</button>
+        <p class="placar">Pontos: <strong id="pontos">0</strong></p>
+      </header>
 
-      <h2 id="enunciado"></h2>
+      <div class="progresso" role="progressbar" aria-label="Progresso do quiz"
+           aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+        <div id="barra" class="progresso-barra"></div>
+      </div>
+
+      <p id="contador" class="contador"></p>
+      <h2 id="enunciado" class="enunciado"></h2>
+
       <div id="alternativas" class="alternativas"></div>
 
-      <p id="feedback" class="feedback"></p>
-      <button id="btn-proxima" class="btn btn-primario" hidden>Próxima</button>
+      <div class="rodape-quiz">
+        <p id="feedback" class="feedback" aria-live="polite"></p>
+        <button id="btn-proxima" class="botao" type="button" hidden>Próxima pergunta</button>
+      </div>
     </section>
 
-    <!-- Tela final -->
-    <section id="tela-final" class="tela" hidden>
-      <h1>Fim do quiz</h1>
-      <p id="resultado" class="resultado"></p>
-      <p id="mensagem-final" class="subtitulo"></p>
-      <button id="btn-reiniciar" class="btn btn-primario">Jogar novamente</button>
+    <!-- ========== TELA 3: resultado ========== -->
+    <section id="tela-resultado" class="tela" hidden>
+      <p class="contador" id="resultado-materia"></p>
+      <p class="resultado-pontos"><span id="resultado-pontos">0</span><small> de <span id="resultado-total">0</span></small></p>
+      <h2 id="resultado-mensagem" class="enunciado"></h2>
+
+      <p class="legenda-gabarito">Seu gabarito</p>
+      <div id="gabarito" class="gabarito"></div>
+
+      <div class="acoes">
+        <button id="btn-repetir" class="botao" type="button">Jogar de novo</button>
+        <button id="btn-outra" class="botao botao-secundario" type="button">Escolher outra matéria</button>
+      </div>
     </section>
 
   </main>
 
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
