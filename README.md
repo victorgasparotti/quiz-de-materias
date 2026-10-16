@@ -5,6 +5,8 @@ Quiz de múltipla escolha com 6 matérias: Geografia, Português, Matemática, H
 - **Versão web** (HTML, CSS e JavaScript puro), que funciona em computador, tablet e celular.
 - **Versão no terminal** (Python).
 
+**Acesse online:** https://quiz-de-materias.vercel.app
+
 A cada rodada são sorteadas 10 perguntas da matéria escolhida, com 4 alternativas (A, B, C, D). Cada acerto vale 100 pontos.
 
 ## Estrutura do projeto
@@ -28,9 +30,19 @@ quiz-geografia/
 └── jogo.py             # regras do jogo e pontuação
 ```
 
-## Como rodar a versão web
+## Como usar a versão web
 
-O JavaScript lê os arquivos `.csv` da pasta `materias/`. Por isso **não abra o `index.html` com dois cliques**: o navegador bloqueia a leitura dos arquivos nesse modo. Use um servidor local, de uma destas formas:
+### Online
+
+Basta abrir o link, no computador, tablet ou celular, sem instalar nada:
+
+**https://quiz-de-materias.vercel.app**
+
+O site está publicado na Vercel. Qualquer mudança enviada para a branch `main` do GitHub atualiza o site automaticamente.
+
+### Localmente (para desenvolver)
+
+O JavaScript lê os arquivos `.csv` da pasta `materias/`. Por isso, no seu computador, **não abra o `index.html` com dois cliques**: o navegador bloqueia a leitura dos arquivos nesse modo. Use um servidor local, de uma destas formas:
 
 **Opção 1: Live Server (VS Code)**
 
@@ -46,7 +58,7 @@ python -m http.server
 
 Depois acesse `http://localhost:8000` no navegador.
 
-### Testando no celular
+### Testando no celular antes de publicar
 
 Com o servidor do Python rodando no computador, abra no celular (conectado na mesma rede Wi-Fi) o endereço `http://IP-DO-SEU-COMPUTADOR:8000`.
 
