@@ -1,15 +1,8 @@
-// =========================================================
-// Quiz de matérias
-// Lê os mesmos arquivos .csv da pasta "materias/" que o Python usa
-// (colunas: pergunta;A;B;C;D;correta  -  separador ponto e vírgula).
-// =========================================================
 
-// ---------- configurações ----------
 const PERGUNTAS_POR_RODADA = 10;
 const PONTOS_POR_ACERTO = 100;
 const LETRAS = ["A", "B", "C", "D"];
 
-// Para adicionar uma matéria nova: crie o .csv e coloque uma linha aqui.
 const MATERIAS = [
   { nome: "Geografia",  arquivo: "materias/geografia.csv" },
   { nome: "Português",  arquivo: "materias/portugues.csv" },
@@ -19,7 +12,6 @@ const MATERIAS = [
   { nome: "Química",    arquivo: "materias/quimica.csv" },
 ];
 
-// ---------- elementos da página ----------
 const telaInicio = document.getElementById("tela-inicio");
 const telaQuiz = document.getElementById("tela-quiz");
 const telaResultado = document.getElementById("tela-resultado");
@@ -45,20 +37,13 @@ const gabaritoEl = document.getElementById("gabarito");
 const btnRepetir = document.getElementById("btn-repetir");
 const btnOutra = document.getElementById("btn-outra");
 
-// ---------- estado do jogo ----------
-let materiaAtual = null;   // matéria escolhida
-let perguntas = [];        // perguntas sorteadas da rodada
-let indice = 0;            // pergunta atual
+let materiaAtual = null;  
+let perguntas = [];       
+let indice = 0;            
 let pontos = 0;
-let respondida = false;    // já clicou numa alternativa?
-let resultados = [];       // true/false de cada pergunta (para o gabarito)
+let respondida = false;   
+let resultados = [];       
 
-// =========================================================
-// Leitura do CSV
-// =========================================================
-
-// Transforma o texto do CSV em uma lista de linhas, cada uma uma lista de colunas.
-// Aceita campos entre aspas e quebras de linha do Windows (\r\n).
 function lerCSV(texto, separador = ";") {
   const linhas = [];
   let linha = [];
@@ -83,19 +68,17 @@ function lerCSV(texto, separador = ";") {
       campo += c;
     }
   }
-  // última linha (se o arquivo não terminar com quebra de linha)
+  
   if (campo !== "" || linha.length > 0) { linha.push(campo); linhas.push(linha); }
 
   return linhas;
 }
 
-// Busca o arquivo e devolve uma lista de objetos:
-// { texto, alternativas: [A, B, C, D], correta: 0..3 }
 async function carregarPerguntas(caminho) {
   const resposta = await fetch(caminho);
   if (!resposta.ok) throw new Error("Não foi possível abrir " + caminho);
 
-  const texto = (await resposta.text()).replace(/^\uFEFF/, ""); // tira o BOM, se tiver
+  const texto = (await resposta.text()).replace(/^\uFEFF/, ""); 
   const linhas = lerCSV(texto).filter(l => l.some(col => col.trim() !== ""));
 
   const cabecalho = linhas[0].map(h => h.trim());
@@ -105,7 +88,7 @@ async function carregarPerguntas(caminho) {
   for (const l of linhas.slice(1)) {
     const letra = (l[col("correta")] || "").trim().toUpperCase();
     const certa = LETRAS.indexOf(letra);
-    if (certa === -1) continue; // ignora linha com resposta inválida
+    if (certa === -1) continue; 
 
     lista.push({
       texto: (l[col("pergunta")] || "").trim(),
@@ -116,9 +99,6 @@ async function carregarPerguntas(caminho) {
   return lista;
 }
 
-// =========================================================
-// Sorteio (mesma ideia do random.sample do Python)
-// =========================================================
 function sortear(lista, quantidade) {
   const copia = [...lista];
   for (let i = copia.length - 1; i > 0; i--) {
@@ -128,18 +108,12 @@ function sortear(lista, quantidade) {
   return copia.slice(0, Math.min(quantidade, copia.length));
 }
 
-// =========================================================
-// Troca de telas
-// =========================================================
 function mostrarTela(tela) {
   for (const t of [telaInicio, telaQuiz, telaResultado]) t.hidden = true;
   tela.hidden = false;
   window.scrollTo({ top: 0 });
 }
 
-// =========================================================
-// Tela inicial
-// =========================================================
 function montarMaterias() {
   listaMaterias.innerHTML = "";
   for (const materia of MATERIAS) {
@@ -174,9 +148,6 @@ async function iniciarMateria(materia, botao) {
   }
 }
 
-// =========================================================
-// Rodada
-// =========================================================
 function comecarRodada() {
   perguntas = sortear(materiaAtual.todas, PERGUNTAS_POR_RODADA);
   indice = 0;
@@ -194,13 +165,11 @@ function atualizarPontos() {
 function mostrarPergunta() {
   const p = perguntas[indice];
   respondida = false;
-  window.scrollTo({ top: 0 }); // no celular, volta ao topo a cada pergunta nova
-
+  window.scrollTo({ top: 0 });
   contadorEl.textContent =
     materiaAtual.nome + " · pergunta " + (indice + 1) + " de " + perguntas.length;
   enunciadoEl.textContent = p.texto;
 
-  // progresso: mostra quantas já foram respondidas
   barraEl.style.width = (indice / perguntas.length) * 100 + "%";
   barraWrap.setAttribute("aria-valuemax", perguntas.length);
   barraWrap.setAttribute("aria-valuenow", indice);
@@ -259,11 +228,7 @@ function proxima() {
   }
 }
 
-// =========================================================
-// Resultado
-// =========================================================
 function mensagemDoResultado(pts, total) {
-  // mesmas faixas do jogo.py
   if (pts === total) return "Perfeito, você acertou tudo!";
   if (pts >= total * 0.8) return "Muito bom!";
   if (pts >= total * 0.6) return "Parabéns!";
@@ -279,7 +244,6 @@ function mostrarResultado() {
   resultadoTotal.textContent = total;
   resultadoMensagem.textContent = mensagemDoResultado(pontos, total);
 
-  // gabarito: uma bolinha por pergunta (verde = acertou, vermelha = errou)
   gabaritoEl.innerHTML = "";
   resultados.forEach((acertou, i) => {
     const b = document.createElement("span");
@@ -293,15 +257,11 @@ function mostrarResultado() {
   btnRepetir.focus();
 }
 
-// =========================================================
-// Eventos
-// =========================================================
 btnProxima.addEventListener("click", proxima);
 btnRepetir.addEventListener("click", comecarRodada);
 btnOutra.addEventListener("click", () => mostrarTela(telaInicio));
 btnSair.addEventListener("click", () => mostrarTela(telaInicio));
 
-// Atalhos: teclas A-D ou 1-4 respondem, Enter vai para a próxima
 document.addEventListener("keydown", (e) => {
   if (telaQuiz.hidden) return;
 
