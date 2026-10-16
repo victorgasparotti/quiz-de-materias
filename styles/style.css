@@ -1,15 +1,11 @@
-/* =========================================================
-   Visual: folha de prova / cartão-resposta.
-   Para mudar as cores, edite só as variáveis aqui embaixo.
-   ========================================================= */
 :root {
   --fundo: #e9edf3;
   --folha: #fbfbf8;
   --tinta: #1d2433;
   --tinta-suave: #5d667a;
   --linha: #cfd5e0;
-  --primaria: #243b9c;      /* azul de caneta */
-  --destaque: #f6d94c;      /* marca-texto */
+  --primaria: #243b9c;     
+  --destaque: #f6d94c;     
   --certo: #1c8a58;
   --errado: #c7372f;
 
@@ -35,14 +31,14 @@
 html { -webkit-text-size-adjust: 100%; }
 
 button {
-  touch-action: manipulation;              /* tira o atraso do toque duplo */
+  touch-action: manipulation;             
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  min-height: 100dvh;                       /* altura real no celular (barra do navegador) */
+  min-height: 100dvh;                      
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -59,7 +55,6 @@ body {
 
 [hidden] { display: none !important; }
 
-/* ---------- folha ---------- */
 .folha {
   width: 100%;
   max-width: 680px;
@@ -67,12 +62,10 @@ body {
   border: 1px solid var(--linha);
   border-radius: 10px;
   padding: 40px 36px;
-  /* margem de caderno: linha vertical à esquerda */
   background-image: linear-gradient(to right, transparent 22px, var(--destaque) 22px, var(--destaque) 24px, transparent 24px);
   background-repeat: no-repeat;
 }
 
-/* ---------- textos ---------- */
 .titulo-grande {
   margin: 0 0 12px;
   font-size: clamp(2.6rem, 9vw, 4.2rem);
@@ -110,7 +103,6 @@ body {
   border-radius: 4px;
 }
 
-/* ---------- escolha de matéria ---------- */
 .materias {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -144,7 +136,6 @@ body {
 
 .materia:disabled { opacity: 0.6; cursor: wait; }
 
-/* ---------- topo do quiz ---------- */
 .topo-quiz {
   display: flex;
   justify-content: space-between;
@@ -182,7 +173,6 @@ body {
   transition: width 0.3s ease;
 }
 
-/* ---------- alternativas (as "bolinhas" do gabarito) ---------- */
 .alternativas {
   display: grid;
   gap: 10px;
@@ -252,7 +242,6 @@ body {
   color: #fff;
 }
 
-/* ---------- rodapé do quiz ---------- */
 .rodape-quiz {
   display: flex;
   justify-content: space-between;
@@ -266,7 +255,6 @@ body {
 .feedback.ok { color: var(--certo); }
 .feedback.erro-resp { color: var(--errado); }
 
-/* ---------- botões ---------- */
 .botao {
   min-height: 48px;
   padding: 12px 22px;
@@ -289,7 +277,6 @@ body {
   background: transparent;
 }
 
-/* ---------- resultado ---------- */
 .resultado-pontos {
   margin: 0 0 6px;
   font-size: clamp(3.4rem, 14vw, 5.5rem);
@@ -332,7 +319,6 @@ body {
   margin-top: 32px;
 }
 
-/* ---------- acessibilidade ---------- */
 :focus-visible {
   outline: 3px solid var(--primaria);
   outline-offset: 2px;
@@ -342,11 +328,6 @@ body {
   * { transition: none !important; }
 }
 
-/* =========================================================
-   Telas diferentes
-   ========================================================= */
-
-/* ---------- tablet (a partir de 768px) ---------- */
 @media (min-width: 768px) {
   body { padding-top: max(48px, env(safe-area-inset-top)); }
 
@@ -367,7 +348,6 @@ body {
   .botao { font-size: 1.05rem; padding: 14px 28px; }
 }
 
-/* ---------- celular (até 520px) ---------- */
 @media (max-width: 520px) {
   body {
     padding:
@@ -380,7 +360,6 @@ body {
   .folha { padding: 28px 18px 20px 32px; }
   .materias { grid-template-columns: 1fr; }
 
-  /* a pergunta/resposta fica visível sem precisar rolar até o botão */
   .rodape-quiz {
     position: sticky;
     bottom: 0;
@@ -395,7 +374,6 @@ body {
   .botao { width: 100%; }
 }
 
-/* ---------- celular deitado (pouca altura) ---------- */
 @media (max-height: 500px) and (orientation: landscape) {
   body { padding-top: max(10px, env(safe-area-inset-top)); padding-bottom: max(10px, env(safe-area-inset-bottom)); }
   .folha { padding: 20px 28px 12px 40px; }
